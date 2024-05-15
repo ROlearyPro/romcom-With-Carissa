@@ -3,9 +3,16 @@
 // Create variables targetting the relevant DOM elements here 👇
 // We've provided a few variables below
 var savedCovers = [
-  createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
+  createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
+  createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
+  // createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
+  // createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
 ];
 var currentCover;
+homeView = document.querySelector(".home-view");
+savedView = document.querySelector(".saved-view");
+formView = document.querySelector(".form-view");
+
 // console.log(covers);
 
 // Add your event listeners here 👇
@@ -16,6 +23,7 @@ var currentCover;
 randomCoverButton = document.querySelector(".random-cover-button");
 
 
+//iteration 0 stuff
 
 // var randomCoverButton = document.querySelector(".random-cover-button");
 // randomCoverButton.onclick =
@@ -77,23 +85,23 @@ function getRandomIndex(array) {
 }
 
 randomCoverButton.onclick =
-function createRandomCover(){
-var cover = {
-  // id: Date.now(),
-  coverImg: covers[getRandomIndex(covers)],
-  title: titles[getRandomIndex(titles)],
-  tagline1: descriptors[getRandomIndex(descriptors)],
-  tagline2: descriptors[getRandomIndex(descriptors)],
-  
-}
-while(cover.tagline1 === cover.tagline2) {
-  cover.tagline2 = descriptors[getRandomIndex(descriptors)];
-  }
-  setMainCover(cover);
-return cover;
-}
+  function createRandomCover() {
+    var cover = {
+      // id: Date.now(),
+      coverImg: covers[getRandomIndex(covers)],
+      title: titles[getRandomIndex(titles)],
+      tagline1: descriptors[getRandomIndex(descriptors)],
+      tagline2: descriptors[getRandomIndex(descriptors)],
 
-function setMainCover(coverObject){
+    }
+    while (cover.tagline1 === cover.tagline2) {
+      cover.tagline2 = descriptors[getRandomIndex(descriptors)];
+    }
+    setMainCover(cover);
+    return cover;
+  }
+
+function setMainCover(coverObject) {
   var mainCover = document.querySelector(".main-cover");
   mainCover.innerHTML = `
   <img class="cover-image" src="${coverObject.coverImg}">
@@ -102,8 +110,67 @@ function setMainCover(coverObject){
   <img class="price-tag" src="./assets/price.png">
   <img class="overlay" src="./assets/overlay.png">
 `
-return mainCover;
+  return mainCover;
 }
+
+//iteration 1 stuff
+
+
+
+makeCoverButton = document.querySelector(".make-new-button");
+makeCoverButton.onclick =
+  function formVisibility() {
+    homeView.style.visibility = "hidden";
+    savedView.style.visibility = "hidden";
+    document.querySelector(".home-button").style.visibility = "";
+    randomCoverButton.style.visibility = "hidden";
+    formView.style.display = "block";
+  }
+
+savedCoverButton = document.querySelector(".view-saved-button");
+savedCoverButton.onclick =
+  function formVisibility() {
+    homeView.style.visibility = "hidden";
+    savedView.style.visibility = "";
+    savedView.style.display = "block";
+
+    document.querySelector(".home-button").style.visibility = "";
+    randomCoverButton.style.visibility = "hidden";
+    // formView.style.display = "hidden";
+    savedView.style.display = "block";
+
+    showSavedCovers(savedCovers);
+  }
+
+
+  //not currently working right; how to get title to show up on individual book covers?
+  var savedCoversSection = document.querySelector(".saved-covers-section");
+  function showSavedCovers(savedCoverArray){
+    for(i = 0;i <savedCoverArray.length; i++){
+      savedCoversSection.innerHTML += `  <img class="mini-cover ${i}" src="${savedCoverArray[i].coverImg}">
+      <h3 class="cover-title ${i}">${savedCoverArray[i].title}</h3>`
+      // <h4 class="tagline${i}">A tale of <span class="tagline-1">${savedCoverArray[i].tagline1}</span> and <span class="tagline-2">${savedCoverArray[i].tagline2}</span></h4>
+      // <img class="price-tag${i}" src="./assets/price.png">
+      // <img class="overlay${i}" src="./assets/overlay.png">
+      // document.querySelector(`.main-cover${i}`).style.height = '125px';
+      // document.querySelector(`.cover-image${i}`).style.width = '100px';
+      // document.querySelector(`.cover-title${i}`).style.height = '100px';
+      // document.querySelector(`.cover-title${i}`).style.width = '75px';
+      // document.querySelector(`.tagline${i}`).style.height = '100px';
+      // document.querySelector(`.tagline${i}`).style.width = '75px';
+      // document.querySelector(`.overlay${i}`).style.height = '100px';
+      // document.querySelector(`.overlay${i}`).style.width = '75px';
+      // document.querySelector(`.price-tag${i}`).style.height = '100px';
+      // document.querySelector(`.price-tag${i}`).style.width = '75px';
+
+    }
+    document.querySelector('.cover-image').style.height = '100px';
+
+    console.log(savedCoverArray);
+    return savedCoverArray;
+  }
+  
+
 
 
 
