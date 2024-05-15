@@ -9,8 +9,8 @@ var currentCover;
 
 // Add your event listeners here 👇
 
-var randomCover = document.getElementById("random-cover-button");
-randomCover.style.color= "green";
+var randomCover = document.getElementById("controls");
+randomCover.style.backgroundColor = "green";
 
 
 // Create your event handlers and other functions here 👇
