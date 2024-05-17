@@ -25,9 +25,6 @@ savedCoversSection = document.querySelector(".saved-covers-section");
 
 // Add your event listeners here 👇
 
-var randomCover = document.getElementById("random-cover-button");
-randomCover.style.color= "green";
-
 
 
 //iteration 0 stuff
@@ -123,15 +120,19 @@ randomCoverButton.onclick =  function createRandomCover() {
   }
 
 
+
 //iteration 1 stuff
 
 
 homeButton.onclick =
   function homeVisibility() {
 
+
+
     if (savedView.classList.contains("hidden") === false) {
       savedView.classList.add("hidden");
     }
+    
     if(savedCoverButton.classList.contains("hidden")===false){
       savedCoverButton.classList.add("hidden");
     }
@@ -234,6 +235,9 @@ function showSavedCovers(savedCoverArray, i) {
   return savedCoverArray;
 
 }
+
+
+
 
 
 
