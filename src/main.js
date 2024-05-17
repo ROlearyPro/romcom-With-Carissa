@@ -249,7 +249,6 @@ var makeNewBookButton = document.querySelector('.create-new-book-button');
 makeNewBookButton.addEventListener('click', makeMyBook);
 
 function makeMyBook() {
-  console.log('waring');
   var enteredImgSrc = inputCover.value;
   var enteredTitle = inputTitle.value;
   var enteredDescriptor1 = inputDescriptor1.value;
@@ -257,6 +256,18 @@ function makeMyBook() {
   var bookCreated = createCover(enteredImgSrc, enteredTitle, enteredDescriptor1, enteredDescriptor2);
   console.log(bookCreated)
 }
+
+/* 
+const checkbox = document.querySelector("#id-checkbox");
+
+checkbox.addEventListener("click", checkboxClick, false);
+
+function checkboxClick(event) {
+  let warn = "preventDefault() won't let you check this!<br>";
+  document.getElementById("output-box").innerHTML += warn;
+  event.preventDefault();
+}
+*/
 
 
 
