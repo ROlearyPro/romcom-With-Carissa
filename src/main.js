@@ -7,6 +7,7 @@ var savedCovers = [
   createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
   // createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
 ];
+
 var currentCover;
 homeView = document.querySelector(".home-view");
 savedView = document.querySelector(".saved-view");
@@ -120,26 +121,27 @@ randomCoverButton.onclick = function createRandomCover() {
 }
 
 //iteration 1 stuff
-homeButton.onclick =
-  function homeVisibility() {
-    if (savedView.classList.contains("hidden") === false) {
-      savedView.classList.add("hidden");
-    }
-    if (savedCoverButton.classList.contains("hidden") === false) {
-      savedCoverButton.classList.add("hidden");
-    }
-    if (formView.classList.contains("hidden") === false) {
-      formView.classList.add("hidden");
-    }
-    randomCoverButton.classList.remove("hidden");
-    saveButton.classList.remove("hidden");
-    homeView.classList.remove("hidden")
-    homeButton.classList.add("hidden");
-    makeCoverButton.classList.remove("hidden");
-    savedCoverButton.classList.remove("hidden");
-    savedCoversSection.classList.add("hidden");
-    savedCoversSection.innerHTML = null;
+
+homeButton.addEventListener('click', homeVisibility);
+function homeVisibility() {
+  if (savedView.classList.contains("hidden") === false) {
+    savedView.classList.add("hidden");
   }
+  if (savedCoverButton.classList.contains("hidden") === false) {
+    savedCoverButton.classList.add("hidden");
+  }
+  if (formView.classList.contains("hidden") === false) {
+    formView.classList.add("hidden");
+  }
+  randomCoverButton.classList.remove("hidden");
+  saveButton.classList.remove("hidden");
+  homeView.classList.remove("hidden")
+  homeButton.classList.add("hidden");
+  makeCoverButton.classList.remove("hidden");
+  savedCoverButton.classList.remove("hidden");
+  savedCoversSection.classList.add("hidden");
+  savedCoversSection.innerHTML = null;
+}
 
 makeCoverButton.onclick =
   function formVisibility() {
@@ -235,21 +237,11 @@ function makeMyBook() {
   var enteredDescriptor1 = inputDescriptor1.value;
   var enteredDescriptor2 = inputDescriptor2.value;
   var bookCreated = createCover(enteredImgSrc, enteredTitle, enteredDescriptor1, enteredDescriptor2);
-  console.log(bookCreated)
-}
-
-/* 
-const checkbox = document.querySelector("#id-checkbox");
-
-checkbox.addEventListener("click", checkboxClick, false);
-
-function checkboxClick(event) {
-  let warn = "preventDefault() won't let you check this!<br>";
-  document.getElementById("output-box").innerHTML += warn;
+  savedCovers.push(bookCreated);
+  setMainCover(bookCreated);
+  homeVisibility();
   event.preventDefault();
 }
-*/
-
 
 
 
