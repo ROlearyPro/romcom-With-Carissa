@@ -25,9 +25,6 @@ savedCoversSection = document.querySelector(".saved-covers-section");
 
 // Add your event listeners here 👇
 
-var randomCover = document.getElementById("random-cover-button");
-randomCover.style.color= "green";
-
 
 
 //iteration 0 stuff
