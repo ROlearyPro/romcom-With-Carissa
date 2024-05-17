@@ -120,19 +120,15 @@ randomCoverButton.onclick =  function createRandomCover() {
   }
 
 
-
 //iteration 1 stuff
 
 
 homeButton.onclick =
   function homeVisibility() {
 
-
-
     if (savedView.classList.contains("hidden") === false) {
       savedView.classList.add("hidden");
     }
-    
     if(savedCoverButton.classList.contains("hidden")===false){
       savedCoverButton.classList.add("hidden");
     }
@@ -153,8 +149,7 @@ homeButton.onclick =
 
 makeCoverButton.onclick =
   function formVisibility() {
-    //removes homeButton's and  formView's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
-
+    //removes homeButton's and formView's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
     if (homeView.classList.contains("hidden") === false) {
       homeView.classList.add("hidden");
     }
@@ -174,9 +169,7 @@ makeCoverButton.onclick =
     savedCoversSection.innerHTML = null;
   }
 
-
 savedCoverButton.onclick =
-
   function savedVisibility() {
     //removes savedCoverButton's and the savedCoversSection's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
     if (homeView.classList.contains("hidden") === false) {
@@ -192,12 +185,13 @@ savedCoverButton.onclick =
       savedCoverButton.classList.add("hidden");
     }
 
+    
     if (savedView.classList.contains("hidden")) {
       for (i = 0; i < savedCovers.length; i++) {
         showSavedCovers(savedCovers, i);
       }
     }
-
+    makeCoverButton.classList.remove("hidden");
     homeButton.classList.remove("hidden");
     saveButton.classList.add("hidden");
     savedCoverButton.classList.add("hidden");
