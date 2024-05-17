@@ -119,34 +119,24 @@ randomCoverButton.onclick = function createRandomCover() {
   return cover;
 }
 
-
-
 //iteration 1 stuff
-
-
 homeButton.onclick =
   function homeVisibility() {
-
-
-
     if (savedView.classList.contains("hidden") === false) {
       savedView.classList.add("hidden");
     }
-
     if (savedCoverButton.classList.contains("hidden") === false) {
       savedCoverButton.classList.add("hidden");
     }
     if (formView.classList.contains("hidden") === false) {
       formView.classList.add("hidden");
     }
-
     randomCoverButton.classList.remove("hidden");
     saveButton.classList.remove("hidden");
     homeView.classList.remove("hidden")
     homeButton.classList.add("hidden");
     makeCoverButton.classList.remove("hidden");
     savedCoverButton.classList.remove("hidden");
-
     savedCoversSection.classList.add("hidden");
     savedCoversSection.innerHTML = null;
   }
@@ -164,13 +154,11 @@ makeCoverButton.onclick =
     if (savedView.classList.contains("hidden") === false) {
       savedView.classList.add("hidden");
     }
-
     makeCoverButton.classList.add("hidden");
     saveButton.classList.add("hidden");
     savedCoverButton.classList.remove("hidden");
     homeButton.classList.remove("hidden");
     formView.classList.remove("hidden");
-
     savedCoversSection.innerHTML = null;
   }
 
@@ -191,18 +179,15 @@ savedCoverButton.onclick =
     if (savedCoverButton.classList.contains("hidden") === false) {
       savedCoverButton.classList.add("hidden");
     }
-
     if (savedView.classList.contains("hidden")) {
       for (i = 0; i < savedCovers.length; i++) {
         showSavedCovers(savedCovers, i);
       }
     }
-
     homeButton.classList.remove("hidden");
     saveButton.classList.add("hidden");
     savedCoverButton.classList.add("hidden");
     savedView.classList.remove("hidden");
-
   }
 
 
@@ -217,8 +202,6 @@ function showSavedCovers(savedCoverArray, i) {
       </h2>
       <img class="overlay" id="overlayID${i}" src="./assets/overlay.png">  
         `
-
-
   //Adds appropriate classes to each newly-created element
   var arrayCover = document.querySelector(`#coverArrayID${i}`);
   arrayCover.classList.add("mini-cover");
@@ -235,9 +218,7 @@ function showSavedCovers(savedCoverArray, i) {
   var arrayOverlay = document.querySelector(`#overlayID${i}`);
   arrayOverlay.classList.add("overlay");
   return savedCoverArray;
-
 }
-
 
 //input.value
 var inputCover = document.querySelector('#cover');
