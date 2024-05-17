@@ -149,8 +149,7 @@ homeButton.onclick =
 
 makeCoverButton.onclick =
   function formVisibility() {
-    //removes homeButton's and  formView's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
-
+    //removes homeButton's and formView's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
     if (homeView.classList.contains("hidden") === false) {
       homeView.classList.add("hidden");
     }
@@ -187,13 +186,13 @@ savedCoverButton.onclick =
       savedCoverButton.classList.add("hidden");
     }
 
-    
+
     if (savedView.classList.contains("hidden")) {
       for (i = 0; i < savedCovers.length; i++) {
         showSavedCovers(savedCovers, i);
       }
     }
-    makeCoverButton.classList.remove("hidden");
+    makeCoverButton.classList.remove("hidden")
     homeButton.classList.remove("hidden");
     saveButton.classList.add("hidden");
     savedCoverButton.classList.add("hidden");
