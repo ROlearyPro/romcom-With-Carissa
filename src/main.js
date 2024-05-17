@@ -1,11 +1,10 @@
-// import {covers} from './data.js';
-// var covers = require('./data.js');
+
 // Create variables targetting the relevant DOM elements here 👇
 // We've provided a few variables below
 var savedCovers = [
   createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
   createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
-  // createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
+  createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
   // createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
 ];
 var currentCover;
@@ -13,14 +12,19 @@ homeView = document.querySelector(".home-view");
 savedView = document.querySelector(".saved-view");
 formView = document.querySelector(".form-view");
 
+makeCoverButton = document.querySelector(".make-new-button");
+homeButton = document.querySelector(".home-button");
+saveButton = document.querySelector(".save-cover-button");
+newButton = document.querySelector(".make-new-button");
+savedCoverButton = document.querySelector(".view-saved-button");
+randomCoverButton = document.querySelector(".random-cover-button");
+savedCoversSection = document.querySelector(".saved-covers-section");
+
+
 // console.log(covers);
 
 // Add your event listeners here 👇
 
-// var randomCover = document.getElementById("controls");
-// randomCover.style.backgroundColor = "green";
-// console.log(document.querySelector(".random-cover-button"));
-randomCoverButton = document.querySelector(".random-cover-button");
 
 
 //iteration 0 stuff
@@ -84,8 +88,22 @@ function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
-randomCoverButton.onclick =
-  function createRandomCover() {
+function setMainCover(coverObject) {
+
+  var mainCover = document.querySelector(".main-cover");
+  mainCover.innerHTML =
+    `
+  <img class="cover-image" src="${coverObject.coverImg}">
+  <h2 class="cover-title">${coverObject.title}</h2>
+  <h3 class="tagline">A tale of <span class="tagline-1">${coverObject.tagline1}</span> and <span class="tagline-2">${coverObject.tagline2}</span></h3>
+  <img class="price-tag" src="./assets/price.png">
+  <img class="overlay" src="./assets/overlay.png">
+`
+  return mainCover;
+}
+// Add your event listeners here 👇
+
+randomCoverButton.onclick =  function createRandomCover() {
     var cover = {
       // id: Date.now(),
       coverImg: covers[getRandomIndex(covers)],
@@ -101,75 +119,129 @@ randomCoverButton.onclick =
     return cover;
   }
 
-function setMainCover(coverObject) {
-  var mainCover = document.querySelector(".main-cover");
-  mainCover.innerHTML = `
-  <img class="cover-image" src="${coverObject.coverImg}">
-  <h2 class="cover-title">${coverObject.title}</h2>
-  <h3 class="tagline">A tale of <span class="tagline-1">${coverObject.tagline1}</span> and <span class="tagline-2">${coverObject.tagline2}</span></h3>
-  <img class="price-tag" src="./assets/price.png">
-  <img class="overlay" src="./assets/overlay.png">
-`
-  return mainCover;
-}
+
 
 //iteration 1 stuff
 
 
+homeButton.onclick =
+  function homeVisibility() {
 
-makeCoverButton = document.querySelector(".make-new-button");
+
+
+    if (savedView.classList.contains("hidden") === false) {
+      savedView.classList.add("hidden");
+    }
+    
+    if(savedCoverButton.classList.contains("hidden")===false){
+      savedCoverButton.classList.add("hidden");
+    }
+    if(formView.classList.contains("hidden")===false){
+      formView.classList.add("hidden");
+    }
+
+    randomCoverButton.classList.remove("hidden");
+    saveButton.classList.remove("hidden");
+    homeView.classList.remove("hidden")
+    homeButton.classList.add("hidden");
+    makeCoverButton.classList.remove("hidden");
+    savedCoverButton.classList.remove("hidden");
+
+    savedCoversSection.classList.add("hidden");
+    savedCoversSection.innerHTML = null;
+  }
+
 makeCoverButton.onclick =
   function formVisibility() {
-    homeView.style.visibility = "hidden";
-    savedView.style.visibility = "hidden";
-    document.querySelector(".home-button").style.visibility = "";
-    randomCoverButton.style.visibility = "hidden";
-    formView.style.display = "block";
-  }
+    //removes homeButton's and  formView's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
 
-savedCoverButton = document.querySelector(".view-saved-button");
-savedCoverButton.onclick =
-  function formVisibility() {
-    homeView.style.visibility = "hidden";
-    savedView.style.visibility = "";
-    savedView.style.display = "block";
-
-    document.querySelector(".home-button").style.visibility = "";
-    randomCoverButton.style.visibility = "hidden";
-    // formView.style.display = "hidden";
-    savedView.style.display = "block";
-
-    showSavedCovers(savedCovers);
-  }
-
-
-  //not currently working right; how to get title to show up on individual book covers?
-  var savedCoversSection = document.querySelector(".saved-covers-section");
-  function showSavedCovers(savedCoverArray){
-    for(i = 0;i <savedCoverArray.length; i++){
-      savedCoversSection.innerHTML += `  <img class="mini-cover ${i}" src="${savedCoverArray[i].coverImg}">
-      <h3 class="cover-title ${i}">${savedCoverArray[i].title}</h3>`
-      // <h4 class="tagline${i}">A tale of <span class="tagline-1">${savedCoverArray[i].tagline1}</span> and <span class="tagline-2">${savedCoverArray[i].tagline2}</span></h4>
-      // <img class="price-tag${i}" src="./assets/price.png">
-      // <img class="overlay${i}" src="./assets/overlay.png">
-      // document.querySelector(`.main-cover${i}`).style.height = '125px';
-      // document.querySelector(`.cover-image${i}`).style.width = '100px';
-      // document.querySelector(`.cover-title${i}`).style.height = '100px';
-      // document.querySelector(`.cover-title${i}`).style.width = '75px';
-      // document.querySelector(`.tagline${i}`).style.height = '100px';
-      // document.querySelector(`.tagline${i}`).style.width = '75px';
-      // document.querySelector(`.overlay${i}`).style.height = '100px';
-      // document.querySelector(`.overlay${i}`).style.width = '75px';
-      // document.querySelector(`.price-tag${i}`).style.height = '100px';
-      // document.querySelector(`.price-tag${i}`).style.width = '75px';
-
+    if (homeView.classList.contains("hidden") === false) {
+      homeView.classList.add("hidden");
     }
-    document.querySelector('.cover-image').style.height = '100px';
+    if (randomCoverButton.classList.contains("hidden") === false) {
+      randomCoverButton.classList.add("hidden");
+    }
+    if (savedView.classList.contains("hidden") === false) {
+      savedView.classList.add("hidden");
+    }
+    
+    makeCoverButton.classList.add("hidden");
+    saveButton.classList.add("hidden");
+    savedCoverButton.classList.remove("hidden");
+    homeButton.classList.remove("hidden");
+    formView.classList.remove("hidden");
 
-    console.log(savedCoverArray);
-    return savedCoverArray;
+    savedCoversSection.innerHTML = null;
   }
-  
+
+
+savedCoverButton.onclick =
+
+  function savedVisibility() {
+    //removes savedCoverButton's and the savedCoversSection's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
+    if (homeView.classList.contains("hidden") === false) {
+      homeView.classList.add("hidden");
+    }
+    if (randomCoverButton.classList.contains("hidden") === false) {
+      randomCoverButton.classList.add("hidden");
+    }
+    if (formView.classList.contains("hidden") === false) {
+      formView.classList.add("hidden");
+    }
+    if (savedCoverButton.classList.contains("hidden") === false) {
+      savedCoverButton.classList.add("hidden");
+    }
+
+    if (savedView.classList.contains("hidden")) {
+      for (i = 0; i < savedCovers.length; i++) {
+        showSavedCovers(savedCovers, i);
+      }
+    }
+
+    homeButton.classList.remove("hidden");
+    saveButton.classList.add("hidden");
+    savedCoverButton.classList.add("hidden");
+    savedView.classList.remove("hidden");
+
+  }
+
+
+function showSavedCovers(savedCoverArray, i) {
+  // adds innerHTML to savedCoversSection, taking in the index so that it can declare unique id values for each book.
+  savedCoversSection.innerHTML +=
+    `<section class="savedCover mini-cover">
+      <img class="savedCover" id="coverArrayID${i}" src="${savedCoverArray[i].coverImg}">
+      <h2 class="savedTitle" id="titleArrayID${i}">${savedCoverArray[i].title}
+      <h3 class="tagline" id="taglineID${i}">A tale of <span class="tagline-1">${savedCoverArray[i].tagline1}</span> and <span class="tagline-2">${savedCoverArray[i].tagline2}</span>
+      </h3>
+      </h2>
+      <img class="overlay" id="overlayID${i}" src="./assets/overlay.png">  
+        `
+
+
+  //Adds appropriate classes to each newly-created element
+  var arrayCover = document.querySelector(`#coverArrayID${i}`);
+  arrayCover.classList.add("mini-cover");
+
+  var arrayTitle = document.querySelector(`#titleArrayID${i}`);
+  arrayTitle.classList.add("cover-title");
+
+  var arrayTagline = document.querySelector(`#taglineID${i}`);
+  arrayTagline.classList.add("tagline");
+
+  // var arrayPriceTag = document.querySelector(`#price-tagID${i}`);
+  // arrayPriceTag.classList.add("price-tag");
+
+  var arrayOverlay = document.querySelector(`#overlayID${i}`);
+  arrayOverlay.classList.add("overlay");
+  return savedCoverArray;
+
+}
+
+
+
+
+
 
 
 
