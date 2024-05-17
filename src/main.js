@@ -189,7 +189,7 @@ savedCoverButton.onclick =
       savedCoverButton.classList.add("hidden");
     }
 
-    
+
     if (savedView.classList.contains("hidden")) {
       for (i = 0; i < savedCovers.length; i++) {
         showSavedCovers(savedCovers, i);
@@ -235,9 +235,6 @@ function showSavedCovers(savedCoverArray, i) {
   return savedCoverArray;
 
 }
-
-
-
 
 
 
