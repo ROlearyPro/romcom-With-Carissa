@@ -103,21 +103,21 @@ function setMainCover(coverObject) {
 }
 // Add your event listeners here 👇
 
-randomCoverButton.onclick =  function createRandomCover() {
-    var cover = {
-      // id: Date.now(),
-      coverImg: covers[getRandomIndex(covers)],
-      title: titles[getRandomIndex(titles)],
-      tagline1: descriptors[getRandomIndex(descriptors)],
-      tagline2: descriptors[getRandomIndex(descriptors)],
+randomCoverButton.onclick = function createRandomCover() {
+  var cover = {
+    // id: Date.now(),
+    coverImg: covers[getRandomIndex(covers)],
+    title: titles[getRandomIndex(titles)],
+    tagline1: descriptors[getRandomIndex(descriptors)],
+    tagline2: descriptors[getRandomIndex(descriptors)],
 
-    }
-    while (cover.tagline1 === cover.tagline2) {
-      cover.tagline2 = descriptors[getRandomIndex(descriptors)];
-    }
-    setMainCover(cover);
-    return cover;
   }
+  while (cover.tagline1 === cover.tagline2) {
+    cover.tagline2 = descriptors[getRandomIndex(descriptors)];
+  }
+  setMainCover(cover);
+  return cover;
+}
 
 
 
@@ -132,11 +132,11 @@ homeButton.onclick =
     if (savedView.classList.contains("hidden") === false) {
       savedView.classList.add("hidden");
     }
-    
-    if(savedCoverButton.classList.contains("hidden")===false){
+
+    if (savedCoverButton.classList.contains("hidden") === false) {
       savedCoverButton.classList.add("hidden");
     }
-    if(formView.classList.contains("hidden")===false){
+    if (formView.classList.contains("hidden") === false) {
       formView.classList.add("hidden");
     }
 
@@ -164,7 +164,7 @@ makeCoverButton.onclick =
     if (savedView.classList.contains("hidden") === false) {
       savedView.classList.add("hidden");
     }
-    
+
     makeCoverButton.classList.add("hidden");
     saveButton.classList.add("hidden");
     savedCoverButton.classList.remove("hidden");
@@ -239,9 +239,24 @@ function showSavedCovers(savedCoverArray, i) {
 }
 
 
+//input.value
+var inputCover = document.querySelector('#cover');
+var inputTitle = document.querySelector('#title');
+var inputDescriptor1 = document.querySelector('#descriptor1');
+var inputDescriptor2 = document.querySelector('#descriptor2');
+var makeNewBookButton = document.querySelector('.create-new-book-button');
 
+makeNewBookButton.addEventListener('click', makeMyBook);
 
-
+function makeMyBook() {
+  console.log('waring');
+  var enteredImgSrc = inputCover.value;
+  var enteredTitle = inputTitle.value;
+  var enteredDescriptor1 = inputDescriptor1.value;
+  var enteredDescriptor2 = inputDescriptor2.value;
+  var bookCreated = createCover(enteredImgSrc, enteredTitle, enteredDescriptor1, enteredDescriptor2);
+  console.log(bookCreated)
+}
 
 
 
