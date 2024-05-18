@@ -2,7 +2,7 @@
 // Create variables targetting the relevant DOM elements here 👇
 // We've provided a few variables below
 var savedCovers = [
-  createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
+  // createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
   // createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
 ];
 
@@ -56,7 +56,8 @@ function setMainCover(coverObject) {
 }
 // Add your event listeners here 👇
 
-randomCoverButton.onclick = function createRandomCover() {
+randomCoverButton.addEventListener('click', createRandomCover);
+function createRandomCover() {
   var cover = {
     // id: Date.now(),
     coverImg: covers[getRandomIndex(covers)],
@@ -71,18 +72,19 @@ randomCoverButton.onclick = function createRandomCover() {
   setMainCover(cover);
   return cover;
 }
+createRandomCover();
 
 //iteration 1 stuff
 
 homeButton.addEventListener('click', homeVisibility);
 function homeVisibility() {
-  if (savedView.classList.contains("hidden") === false) {
+  if (!savedView.classList.contains("hidden")) {
     savedView.classList.add("hidden");
   }
-  if (savedCoverButton.classList.contains("hidden") === false) {
+  if (!savedCoverButton.classList.contains("hidden")) {
     savedCoverButton.classList.add("hidden");
   }
-  if (formView.classList.contains("hidden") === false) {
+  if (!formView.classList.contains("hidden")) {
     formView.classList.add("hidden");
   }
   randomCoverButton.classList.remove("hidden");
@@ -95,60 +97,94 @@ function homeVisibility() {
   savedCoversSection.innerHTML = null;
 }
 
-makeCoverButton.onclick =
-  function formVisibility() {
-    //removes homeButton's and formView's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
-    if (homeView.classList.contains("hidden") === false) {
-      homeView.classList.add("hidden");
-    }
-    if (randomCoverButton.classList.contains("hidden") === false) {
-      randomCoverButton.classList.add("hidden");
-    }
-    if (savedView.classList.contains("hidden") === false) {
-      savedView.classList.add("hidden");
-    }
-    makeCoverButton.classList.add("hidden");
-    saveButton.classList.add("hidden");
-    savedCoverButton.classList.remove("hidden");
-    homeButton.classList.remove("hidden");
-    formView.classList.remove("hidden");
-    savedCoversSection.innerHTML = null;
+makeCoverButton.addEventListener('click', formVisibility);
+
+function formVisibility() {
+  //removes homeButton's and formView's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
+  if (!homeView.classList.contains("hidden")) {
+    homeView.classList.add("hidden");
   }
-
-savedCoverButton.onclick =
-  function savedVisibility() {
-    //removes savedCoverButton's and the savedCoversSection's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
-    if (homeView.classList.contains("hidden") === false) {
-      homeView.classList.add("hidden");
-    }
-    if (randomCoverButton.classList.contains("hidden") === false) {
-      randomCoverButton.classList.add("hidden");
-    }
-    if (formView.classList.contains("hidden") === false) {
-      formView.classList.add("hidden");
-    }
-    if (savedCoverButton.classList.contains("hidden") === false) {
-      savedCoverButton.classList.add("hidden");
-    }
+  if (!randomCoverButton.classList.contains("hidden")) {
+    randomCoverButton.classList.add("hidden");
+  }
+  if (!savedView.classList.contains("hidden")) {
+    savedView.classList.add("hidden");
+  }
+  makeCoverButton.classList.add("hidden");
+  saveButton.classList.add("hidden");
+  savedCoverButton.classList.remove("hidden");
+  homeButton.classList.remove("hidden");
+  formView.classList.remove("hidden");
+  savedCoversSection.innerHTML = null;
+}
 
 
-    if (savedView.classList.contains("hidden")) {
-      for (i = 0; i < savedCovers.length; i++) {
-        showSavedCovers(savedCovers, i);
-      }
-    }
-    makeCoverButton.classList.remove("hidden");
-    homeButton.classList.remove("hidden");
-    saveButton.classList.add("hidden");
+var deleteBookEventArray = [];
+
+savedCoverButton.addEventListener('click', savedVisibility);
+
+function savedVisibility() {
+  //removes savedCoverButton's and the savedCoversSection's "hidden" class, gives other classes "hidden" instead, then loops showSavedCovers to display the array of saved covers
+  if (!homeView.classList.contains("hidden")) {
+    homeView.classList.add("hidden");
+  }
+  if (!randomCoverButton.classList.contains("hidden")) {
+    randomCoverButton.classList.add("hidden");
+  }
+  if (!formView.classList.contains("hidden")) {
+    formView.classList.add("hidden");
+  }
+  if (!savedCoverButton.classList.contains("hidden")) {
     savedCoverButton.classList.add("hidden");
-    savedView.classList.remove("hidden");
   }
 
+
+
+  if (savedView.classList.contains("hidden")) {
+    for (i = 0; i < savedCovers.length; i++) {
+      showSavedCovers(savedCovers, i);
+    }
+    for (i = 0; i < savedCovers.length; i++) {
+      deleteBookEventArray[i] = document.querySelector(`#savedCoverID${i}`);
+      deleteBookEventArray[i].valueInArray = savedCovers[i];
+      deleteBookEventArray[i].indexValue = i;
+      deleteBookEventArray[i].addEventListener('dblclick', deleteSavedCover)
+      console.log("added event listener to deleteBookEventArray[" + i + "], is it working?")
+    }
+  }
+  makeCoverButton.classList.remove("hidden");
+  homeButton.classList.remove("hidden");
+  saveButton.classList.add("hidden");
+  savedCoverButton.classList.add("hidden");
+  savedView.classList.remove("hidden");
+}
+/**
+From the saved covers view, if a user double clicks a saved poster, it will be deleted
+HTML onclick attributes should not be used in any HTML code - 
+all functionality should be through JavaScript. 
+*/
+
+function deleteSavedCover() {
+
+  var valueToFind = this.valueInArray;
+  var indexV = this.indexValue;
+  var indexFound = savedCovers.findIndex(function (valueToFind) {
+    return ((savedCovers[indexV].coverImg === valueToFind.coverImg) && (savedCovers[indexV].title === valueToFind.title) && (savedCovers[indexV].tagline1 === valueToFind.tagline1) && (savedCovers[indexV].tagline2 === valueToFind.tagline2))
+  });
+
+
+
+  savedCovers.splice(indexFound, 1);
+  savedCoversSection.innerHTML = null;
+  savedView.classList.add("hidden");
+  savedVisibility();
+
+}
 
 function showSavedCovers(savedCoverArray, i) {
   // adds innerHTML to savedCoversSection, taking in the index so that it can declare unique id values for each book.
   savedCoversSection.innerHTML +=
-    `<section class="savedCover mini-cover">
+    `<section class="savedCover mini-cover" id = "savedCoverID${i}">
       <img class="savedCover" id="coverArrayID${i}" src="${savedCoverArray[i].coverImg}">
       <h2 class="savedTitle" id="titleArrayID${i}">${savedCoverArray[i].title}
       <h3 class="tagline" id="taglineID${i}">A tale of <span class="tagline-1">${savedCoverArray[i].tagline1}</span> and <span class="tagline-2">${savedCoverArray[i].tagline2}</span>
@@ -171,10 +207,12 @@ function showSavedCovers(savedCoverArray, i) {
 
   var arrayOverlay = document.querySelector(`#overlayID${i}`);
   arrayOverlay.classList.add("overlay");
+
+
+
   return savedCoverArray;
 }
 
-//input.value
 var inputCover = document.querySelector('#cover');
 var inputTitle = document.querySelector('#title');
 var inputDescriptor1 = document.querySelector('#descriptor1');
@@ -189,7 +227,6 @@ function makeMyBook() {
   var enteredDescriptor1 = inputDescriptor1.value;
   var enteredDescriptor2 = inputDescriptor2.value;
   var bookCreated = createCover(enteredImgSrc, enteredTitle, enteredDescriptor1, enteredDescriptor2);
-  savedCovers.push(bookCreated);
   setMainCover(bookCreated);
   homeVisibility();
   event.preventDefault();
@@ -224,7 +261,6 @@ function objectEquality(arrayOfObjects, intoArray) {
   }
   return areSame;
 }
-
 
 
 function createCover(imgSrc, title, descriptor1, descriptor2) {
