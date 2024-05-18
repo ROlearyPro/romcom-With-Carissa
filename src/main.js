@@ -3,8 +3,6 @@
 // We've provided a few variables below
 var savedCovers = [
   createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
-  createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
-  createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
   // createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows"),
 ];
 
@@ -22,62 +20,16 @@ randomCoverButton = document.querySelector(".random-cover-button");
 savedCoversSection = document.querySelector(".saved-covers-section");
 
 
-// console.log(covers);
+homeCover = document.querySelector(".cover-image");
+homeCover.id = "mainCover";
+homeTitle = document.querySelector(".cover-title");
+homeTitle.id = "mainTitle";
 
-// Add your event listeners here 👇
+homeTagline1 = document.querySelector(".tagline-1");
+homeTagline1.id = "mainTagline1";
 
-
-
-//iteration 0 stuff
-
-// var randomCoverButton = document.querySelector(".random-cover-button");
-// randomCoverButton.onclick =
-//   function showThing() {
-//     function getRandomInt(max) {
-//       return Math.floor(Math.random() * max);
-//     }
-// console.log(randomCoverButton);
-//     if (getRandomInt(2) === 1) {
-//       var rgb = [];
-//       for (var i = 0; i < 3; i++) {
-//         rgb.push(Math.floor(Math.random() * 255));
-//       }
-//       randomCoverButton.style.color = 'rgb(' + rgb.join(',') + ')';
-//       randomCoverButton.style.backgroundColor = 'gray';
-//       randomCoverButton.style.backgroundColor.onmouseover = 'white';
-//     }
-//     else {
-//       randomCoverButton.style.removeProperty('color');
-//       randomCoverButton.style.removeProperty('background-color');
-//     }
-//     return Date.now();
-//   };
-//   document.querySelector(".random-cover-button").onmouseover = 
-//   function hoverBackground()
-//   {
-//     if(randomCoverButton.style.color === ''){
-//       randomCoverButton.style.removeProperty('background-color');
-//     }
-//     else{
-//       randomCoverButton.style.backgroundColor = 'white';
-
-//     }
-//   }
-//   document.querySelector(".random-cover-button").onmouseout = 
-//   function returnBackground()
-//   {
-//     if(randomCoverButton.style.backgroundColor === ''){
-//     }else{
-//       if(randomCoverButton.style.color !== ''){
-//       randomCoverButton.style.backgroundColor = 'gray';}
-//       else{
-//         randomCoverButton.style.removeProperty('background-color');
-
-//       }
-//     }
-//   }
-
-//general code stuff to reference?^
+homeTagline2 = document.querySelector(".tagline-2");
+homeTagline2.id = "mainTagline2";
 
 
 // Create your event handlers and other functions here 👇
@@ -94,9 +46,9 @@ function setMainCover(coverObject) {
   var mainCover = document.querySelector(".main-cover");
   mainCover.innerHTML =
     `
-  <img class="cover-image" src="${coverObject.coverImg}">
-  <h2 class="cover-title">${coverObject.title}</h2>
-  <h3 class="tagline">A tale of <span class="tagline-1">${coverObject.tagline1}</span> and <span class="tagline-2">${coverObject.tagline2}</span></h3>
+  <img class="cover-image" id = "mainCover" src="${coverObject.coverImg}">
+  <h2 class="cover-title" id = "mainTitle">${coverObject.title}</h2>
+  <h3 class="tagline">A tale of <span class="tagline-1" id = "mainTagline1">${coverObject.tagline1}</span> and <span class="tagline-2" id = "mainTagline2">${coverObject.tagline2}</span></h3>
   <img class="price-tag" src="./assets/price.png">
   <img class="overlay" src="./assets/overlay.png">
 `
@@ -241,6 +193,36 @@ function makeMyBook() {
   setMainCover(bookCreated);
   homeVisibility();
   event.preventDefault();
+}
+
+
+// Goals: Prevent the array from storing any duplicates;
+// Make it so that on the home page, pressing "save cover" will actually save the cover
+saveButton.addEventListener('click', saveTheCover);
+
+function saveTheCover() {
+  // Redeclares the home values so that we can accurately save them, even if random/makeCover have been called
+
+  homeCover = document.querySelector(".cover-image");
+  homeTitle = document.querySelector(".cover-title");
+  homeTagline1 = document.querySelector(".tagline-1");
+  homeTagline2 = document.querySelector(".tagline-2");
+  var tempCover = createCover(homeCover.src, homeTitle.innerText, homeTagline1.innerText, homeTagline2.innerText);
+  // calls objectEquality, which compares the new cover's image, taglines, and title with those of the books already in the array, and returns false if ALL of those values are the same
+  if (objectEquality(savedCovers, tempCover) === false) {
+    savedCovers.push(tempCover);
+  }
+}
+
+// compares the new cover's image, taglines, and title with those of the books already in the array, and returns false if ALL of those values are the same
+function objectEquality(arrayOfObjects, intoArray) {
+  var areSame = false;
+  for (i = 0; i < arrayOfObjects.length; i++) {
+    if ((intoArray.coverImg === arrayOfObjects[i].coverImg) && (intoArray.title === arrayOfObjects[i].title) && (intoArray.tagline1 === arrayOfObjects[i].tagline1) && (intoArray.tagline2 === arrayOfObjects[i].tagline2))
+      areSame = true;
+
+  }
+  return areSame;
 }
 
 
